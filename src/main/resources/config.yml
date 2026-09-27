@@ -1,0 +1,55 @@
+# ================================
+# Config PvpNpc
+# ================================
+
+# Ce serveur est-il le serveur "PvP" (celui qui contient les arenes) ?
+# - true  -> ce serveur gere la file d'attente, les arenes, les combats
+# - false -> ce serveur ne fait que servir de "hub" avec un PNJ qui envoie vers le serveur PvP
+server-role: HUB   # HUB ou PVP
+
+# Nom du serveur cible (declare cote proxy Bungee/Velocity) vers lequel le PNJ du hub envoie les joueurs
+npc-target-server: "pvp"
+
+# Nom du serveur vers lequel renvoyer les joueurs une fois le combat termine (laisser vide pour rester sur ce serveur)
+return-server: "hub"
+
+queue:
+  min-players-to-start: 2
+  # Son joue en boucle pendant l'attente (nom de son vanilla, ex: block.note_block.bell, block.amethyst_block.chime)
+  waiting-sound: "block.amethyst_block.chime"
+  sound-interval-seconds: 4
+
+countdown:
+  seconds: 5
+  sound-tick: "block.note_block.hat"
+  sound-go: "entity.ender_dragon.growl"
+
+restore:
+  blocks-per-tick: 400
+
+# Zone qui se retrecit si le combat traine en longueur (evite les combats infinis)
+fight-timer:
+  shrink-after-seconds: 300     # delai avant que la zone commence a se retrecir (5 min)
+  shrink-duration-seconds: 60   # temps que met la zone pour atteindre son rayon minimum
+  min-radius: 3                 # rayon minimum (en blocs, autour du centre de l'arene)
+  damage-per-tick: 2.0          # degats infliges par intervalle a qui est hors zone
+  tick-interval-seconds: 1      # frequence de verification/degats
+
+# Delai laisse au gagnant pour looter le stuff du perdant avant d'etre renvoye automatiquement
+loot:
+  grace-period-seconds: 300     # 5 minutes
+
+# Commandes interdites pendant un combat (fuite)
+blocked-commands-in-match:
+  - "server"
+  - "hub"
+  - "spawn"
+  - "lobby"
+  - "tpa"
+  - "tpaccept"
+  - "warp"
+  - "home"
+
+# Rempli automatiquement par les commandes /arenapvp et /npcpvp, ne pas editer a la main
+arenas: []
+npcs: []

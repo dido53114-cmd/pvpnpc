@@ -1,0 +1,21 @@
+name: PvpNpc
+version: '1.0.0'
+main: fr.exemple.pvpnpc.PvpNpcPlugin
+api-version: '1.20'
+author: Toi
+description: PNJ de teleportation reseau + file d'attente PvP par arenes avec regen de terrain
+
+commands:
+  arenapvp:
+    description: Gestion des arenes PvP
+    permission: pvpnpc.admin
+    usage: /arenapvp <pos1|pos2|spawn1|spawn2|create|remove|list> [nom]
+  npcpvp:
+    description: Gestion du PNJ de teleportation
+    permission: pvpnpc.admin
+    usage: /npcpvp <create|remove> [serveur-cible]
+
+permissions:
+  pvpnpc.admin:
+    description: Autorise la configuration des arenes et du PNJ
+    default: op
