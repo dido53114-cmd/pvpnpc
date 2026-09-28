@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.persistence.PersistentDataType;
@@ -64,9 +63,7 @@ public class NpcManager {
             v.setInvulnerable(true);
             v.setSilent(true);
             v.setCollidable(true);
-            v.setCustomName(Component.text("Combat PvP", NamedTextColor.RED)
-                    .appendNewline()
-                    .append(Component.text("Clique pour rejoindre !", NamedTextColor.GRAY)));
+            v.customName(Component.text("Combat PvP - clic droit", NamedTextColor.RED));
             v.setCustomNameVisible(true);
             v.setProfession(Villager.Profession.NONE);
             v.getPersistentDataContainer().set(new NamespacedKey(plugin, TAG_KEY), PersistentDataType.BYTE, (byte) 1);
@@ -75,7 +72,7 @@ public class NpcManager {
         villager.setRemoveWhenFarAway(false);
 
         if (persist) {
-            List<Map<String, Object>> list = new ArrayList<>(plugin.getConfig().getMapList("npcs"));
+            List<Map<?, ?>> list = new ArrayList<>(plugin.getConfig().getMapList("npcs"));
             Map<String, Object> m = new LinkedHashMap<>();
             m.put("world", loc.getWorld().getName());
             m.put("x", loc.getX());
@@ -105,7 +102,7 @@ public class NpcManager {
         found.remove();
 
         List<Map<?, ?>> list = plugin.getConfig().getMapList("npcs");
-        List<Map<String, Object>> newList = new ArrayList<>();
+        List<Map<?, ?>> newList = new ArrayList<>();
         for (Map<?, ?> m : list) {
             double x = ((Number) m.get("x")).doubleValue();
             double y = ((Number) m.get("y")).doubleValue();
@@ -113,9 +110,7 @@ public class NpcManager {
             if (Math.abs(x - loc.getX()) < 0.5 && Math.abs(y - loc.getY()) < 0.5 && Math.abs(z - loc.getZ()) < 0.5) {
                 continue; // on saute celui qu'on vient de supprimer
             }
-            @SuppressWarnings("unchecked")
-            Map<String, Object> casted = (Map<String, Object>) m;
-            newList.add(casted);
+            newList.add(m);
         }
         plugin.getConfig().set("npcs", newList);
         plugin.saveConfig();
